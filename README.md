@@ -5,9 +5,17 @@ Jest to strona, na której możemy szukać dotępnych do wynajęcia pokoi, używ
 
 #### Oto podgląd strony w formie screenów: 
 ![Zrzut ekranu 2024-04-26 123425](https://github.com/szczepaniak2002/Rooms_booking_system/assets/101816148/ce9ff203-d3f5-40b5-912c-daf83abb5d59)
+
+
 ![Zrzut ekranu 2024-04-26 123346](https://github.com/szczepaniak2002/Rooms_booking_system/assets/101816148/c9d363c1-a2ce-4916-a932-7f932718cf2e)
+
+
 ![Zrzut ekranu 2024-04-26 123532](https://github.com/szczepaniak2002/Rooms_booking_system/assets/101816148/5d04e6fb-bb8d-4d01-809e-25b91a231ade)
+
+
 ![Zrzut ekranu 2024-04-26 123541](https://github.com/szczepaniak2002/Rooms_booking_system/assets/101816148/9cb607ea-5626-492e-b6f7-28fedf01a40a)
+
+
 ![Zrzut ekranu 2024-04-26 123322](https://github.com/szczepaniak2002/Rooms_booking_system/assets/101816148/a0f8145e-3bdb-4fe9-be9b-71d5c368dc1d)
 
 
