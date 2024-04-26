@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%  load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link rel="stylesheet" href="{% static 'css/home_page_css.css' %}">
+</head>
+<body>
+    <div class="header-panel">
+        <h1>reservo</h1>
+    </div>
+    
+    <div class="secondary-panel">
+        <a href="{% url 'login_page' %}" class="btn">Log In</a>
+
+        <a href="{% url 'signup_page' %}" class="btn">Sign up</a>
+    </div>
+    
+   <div class="welcome-header">
+        <p class="welcome-message">
+            <strong>Welcome to my website.</strong>
+        </p>
+    </div>
+
+    <div class="main-content">
+        <p class="additional-info">
+            Through it, you can reserve a room for your upcoming trip.
+            To proceed, log in or create an account.
+        </p>
+    </div>
+
+
+    
+</body>
+</html>

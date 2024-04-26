@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%  load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/contact_page.css' %}">
+    <title>Contact Page</title>
+</head>
+<body>
+        <div class="navbar">
+    <div class="reservo">
+        <span>reservo</span>
+    </div>
+    
+    <div class="sites">
+        <span><a href="{% url 'user_page' %}">userpage</a></span>
+        <span><a href="{% url 'reservation_page' %}">reservations</a></span>
+        <span class="{% if request.resolver_match.url_name == 'contact_page' %}active{% endif %}">
+            <a href="{% url 'contact_page' %}">contact</a>
+        </span>
+    </div>    
+
+    <div class="user-info">
+        <span> Need help? Contact us</span>
+    </div>
+
+    <div class="logout-button">
+        <a href="{% url 'login_page' %}">Log out</a>
+    </div>
+</div>
+
+
+<main>
+        <div class="contact-info">
+            <div class="contact-item">
+                <span class="contact-icon">&#9993;</span>
+                <p>Email: <a href="mailto:info@example.com">info@example.com</a></p>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">&#9742;</span>
+                <p>Phone: +48 382 211 291</p>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">&#127968;</span>
+                <p>Address: ul.Postępu 17, Warszawa</p>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

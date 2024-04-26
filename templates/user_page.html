@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%  load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/user_page.css' %}">
+    <link rel="stylesheet" href="css/lightbox2.css">
+
+   <script src="js/lightbox2.js"></script>
+
+
+
+
+
+    <title>Your Django Project</title>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="reservo">
+        <span>reservo</span>
+    </div>
+    
+    <div class="sites">
+        <span class="{% if request.resolver_match.url_name == 'user_page' %}active{% endif %}">
+            <a href="{% url 'user_page' %}">userpage</a>
+        </span>
+        <span><a href="{% url 'reservation_page' %}">reservations</a></span>
+        <span><a href="{% url 'contact_page' %}">contact</a></span>
+    </div>    
+
+    <div class="user-info">
+        <span>Hello {{ user.username }}. Where are you going today?</span>
+    </div>
+    <div class="reset-password">
+        <a href="{% url 'password_page' %}">Reset password</a>
+    </div>
+    <div class="logout-button">
+        <a href="{% url 'login_page' %}">Log out</a>
+    </div>
+</div>
+
+
+<div class="form-container">
+    <form action="{% url 'search_rooms' %}" method="post" onsubmit="return keepFormData(this);">
+        {% csrf_token %}
+        <label for="city">City:</label>
+        <select id="city" name="city">
+            <option value="Warszawa">Warszawa</option>
+            <option value="Łódź">Łódź</option>
+            <option value="Łask">Łask</option>
+            <option value="Gdańsk">Gdańsk</option>
+            <option value="Karpacz">Karpacz</option>
+        </select>
+
+        <label for="arrive_date">Arrival Date:</label>
+        <input type="date" id="arrive_date" name="arrive_date">
+
+        <label for="departure_date">Departure Date:</label>
+        <input type="date" id="departure_date" name="departure_date" >
+
+        <label for="beds">Guests:</label>
+        <input type="number" id="beds" name="beds" min="1" value="1" >
+
+        <button class="submit-button" type="submit">Submit</button>
+    </form>
+</div>
+
+
+
+<div class="header-container">
+    <h1 class="avrooms">Our rooms</h1>
+    <a href="{% url 'refresh_rooms' %}">
+        <button class="refresh-button" onclick="resetForm()" >Show all rooms</button>
+    </a>
+
+</div>
+
+<div class="rooms-container">
+        {% for room in rooms %}
+            <div class="room-card">
+                    <div class="room-info">
+                        <h2>{{ room.name }}</h2>
+                        <p><strong>Miasto:</strong> {{ room.location.city }}</p>
+                        <p><strong>Adres:</strong> {{ room.location.address }}</p>
+                        <p><strong>Beds:</strong> {{ room.beds }}</p>
+                        <p><strong>Status:</strong> {{ room.status }}</p>
+                        <p><strong>Price per Night:</strong> {{ room.price_per_night }}</p>
+                        {% if room.status == "available" %}
+
+                         <form method="post" action="{% url 'booking_page' room.name %}">
+                            {% csrf_token %}
+                            <button type="submit" class="booking-button">Book now</button>
+                         </form>
+
+
+                        {% else %}
+
+
+                            <button  class="not-available">Booking not available</button>
+
+
+                        {% endif %}
+
+
+                    </div>
+                         <div class="room-img">
+                            <a class="lightbox" href="{{ room.picture1.url }}" data-lightbox="room-{{ room.id }}">
+                            <img src="{{ room.picture1.url }}" alt="{{ room.name }} ">
+                            </a>
+                            <a class="lightbox" href="{{ room.picture2.url }}" data-lightbox="room-{{ room.id }}">
+                                <img src="{{ room.picture2.url }}" alt="{{ room.name }} ">
+                            </a>
+                            <a class="lightbox" href="{{ room.picture3.url }}" data-lightbox="room-{{ room.id }}">
+                                <img src="{{ room.picture3.url }}" alt="{{ room.name }} ">
+                            </a>
+                             
+                             
+                        </div>
+
+            </div>
+        {% endfor %}
+ </div>
+
+
+</body>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('city').value = sessionStorage.getItem('city') || '';
+    document.getElementById('arrive_date').value = sessionStorage.getItem('arrive_date') || '';
+    document.getElementById('departure_date').value = sessionStorage.getItem('departure_date') || '';
+    document.getElementById('beds').value = sessionStorage.getItem('beds') || '';
+});
+
+function keepFormData(form) {
+    sessionStorage.setItem('city', form.city.value);
+    sessionStorage.setItem('arrive_date', form.arrive_date.value);
+    sessionStorage.setItem('departure_date', form.departure_date.value);
+    sessionStorage.setItem('beds', form.beds.value);
+    var city = form.city.value;
+    var arriveDate = form.arrive_date.value;
+    var departureDate = form.departure_date.value;
+    var beds = form.beds.value;
+
+    if (!city || !arriveDate || !departureDate || !beds) {
+        alert("Wprowadź wartości we wszystkich polach formularza.");
+        return false; 
+    }
+
+    return true;
+}
+
+function resetForm() {
+    document.getElementById('city').value = '';
+    document.getElementById('arrive_date').value = '';
+    document.getElementById('departure_date').value = '';
+    document.getElementById('beds').value = 1;
+
+    sessionStorage.removeItem('city');
+    sessionStorage.removeItem('arrive_date');
+    sessionStorage.removeItem('departure_date');
+    sessionStorage.removeItem('beds');
+}
+
+
+
+ lightbox.option({
+        'resizeDuration': 200,
+        'wrapAround': true,
+        'alwaysShowNavOnTouchDevices': true
+    });
+</script>
+
+
+</html>

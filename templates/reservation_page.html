@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%  load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/reservation_page.css' %}">
+    <title>reservations</title>
+
+</head>
+<body>
+    <div class="navbar">
+        <div class="reservo">reservo</div>
+        <div class="sites">
+            <span><a href="{% url 'user_page' %}">userpage</a></span>
+            <span class="{% if request.resolver_match.url_name == 'reservation_page' %}active{% endif %}">
+                <a href="{% url 'reservation_page' %}">reservations</a>
+            </span>
+            <span><a href="{% url 'contact_page' %}">contact</a></span>
+
+        </div> 
+        <div id="logout"><a href="{% url 'login_page' %}">Log out</a></div>
+    </div>
+    
+     <h1>Your Reservations</h1>
+<div class="rooms-container">
+    {% if user_reservations %}
+        <ul>
+            {% for reservation in user_reservations %}
+                <div class="room-card">
+                    <div class="room-info">
+                        <h2>{{ reservation.room.name }}</h2>
+                        <p><strong>Miasto:</strong> {{ reservation.room.location.city }}</p>
+                        <p><strong>Adres:</strong> {{ reservation.room.location.address }}</p>
+                        <p><strong>Beds:</strong> {{ reservation.room.beds }}</p>
+                        <p id="cost{{ reservation.id }}"><strong>Total Cost:</strong> Calculating...</p>
+                         <form method="post" action="{% url 'cancel_reservation' reservation.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="cancel-button">Cancel</button>
+                         </form>
+                        
+
+                    </div>
+                    
+                    <div class="guest-info">
+                        
+                        <p><strong>Name:</strong> {{ reservation.name }} {{ reservation.surname }}</p>
+                        <p><strong>Mail:</strong> {{ reservation.mail }}</p>
+                        <p><strong>Check in date:</strong> {{ reservation.check_in}}</p>
+                        <p><strong>Check out date:</strong> {{ reservation.check_out }}</p>
+
+                        
+                        
+
+                    </div>
+                    
+                    <div class="room-img">
+                        <img src="{{ reservation.room.picture1.url }}" alt="{{ room.name }} ">
+                        <img src="{{ reservation.room.picture2.url }}" alt="{{ room.name }} ">
+                        <img src="{{ reservation.room.picture3.url }}" alt="{{ room.name }} ">
+
+                    </div>
+
+                </div>
+                
+                
+                 <script>
+                    var checkinDate{{ reservation.id }} = new Date("{{ reservation.check_in }}");
+                    var checkoutDate{{ reservation.id }} = new Date("{{ reservation.check_out }}");
+                    var pricePerNight{{ reservation.id }} = {{ reservation.room.price_per_night }};
+
+                    var numberOfNights{{ reservation.id }} = Math.ceil((checkoutDate{{ reservation.id }} - checkinDate{{ reservation.id }}) / (1000 * 60 * 60 * 24));
+                    var totalCost{{ reservation.id }} = numberOfNights{{ reservation.id }} * pricePerNight{{ reservation.id }};
+
+                    document.getElementById("cost{{ reservation.id }}").innerHTML = "<strong>Total Cost:</strong> " + totalCost{{ reservation.id }}.toFixed(2) + " PLN";
+                </script>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No reservations found.</p>
+    {% endif %}
+    </div>
+
+
+</body>
+
+
+
+
+
+</html>

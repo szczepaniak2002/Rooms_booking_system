@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%  load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/booking_page.css' %}">
+    <title>Booking Form</title>
+</head>
+<body>
+
+
+    <div class="header-panel">
+        <h1>Booking Form</h1>
+    </div>
+     <div class="secondary-panel">
+         <p>You are booking the room: {{ room_name }} </p>
+
+         <a href="{% url 'user_page' %}" class="cancel-btn">Cancel</a>
+    </div>
+
+    <div class = form-panel>
+         
+
+            <form method="post" action="{% url 'book_room' %}">
+                {% csrf_token %}
+                <label for="name">Name:</label>
+                <input type="text" name="name" required><br>
+        
+                <label for="surname">Surname:</label>
+                <input type="text" name="surname" required><br>
+        
+                <label for="mail">Email:</label>
+                <input type="email" name="mail" required><br>
+        
+                <label for="check_in">Check-in date:</label>
+                <input type="date" name="check_in" required><br>
+        
+                <label for="check_out">Check-out date:</label>
+                <input type="date" name="check_out" required><br>
+                
+                <input type="hidden" name="room_name" value="{{ room_name }}">
+                <button type="submit" class="btn">Book</button>
+            </form>
+        
+    </div>
+</body>
+</html>

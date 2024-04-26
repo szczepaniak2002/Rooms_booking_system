@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {%  load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="{% static 'css/signup_page.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+</head>
+
+<body>
+    <div class="header-panel">
+        <h1>Hello to my website</h1>
+    </div>
+
+    <div class="secondary-panel">
+        <a href="{% url 'home' %}" class="btn">Home</a>
+        <a href="{% url 'login_page' %}" class="btn">Login</a>
+    </div>
+
+    <div class="register-form">
+        <h2>Register</h2>
+
+        {% if error_message %}
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Try again',
+                    text: '{{ error_message }}',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+        {% endif %}
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password1">Password:</label>
+            <input type="password" id="password1" name="password1" required>
+
+            <label for="password2">Confirm Password:</label>
+            <input type="password" id="password2" name="password2" required>
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+    </div>
+
+    
+</body>
+
+</html>
